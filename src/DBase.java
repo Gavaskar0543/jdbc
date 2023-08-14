@@ -3,6 +3,23 @@ import java.sql.*;
 public class DBase {
 
 	public static void main(String[] args) throws Exception {
+		readConnection();
+		// insertData();
+	}
+
+	private static void insertData() throws Exception {
+		String url = "jdbc:mysql://localhost:3306/jdbcDemo";
+		String userName = "root";
+		String password = "Gava050220#";
+		String Query = "insert into employee values(2,'ajay',620000)";
+		Connection con = DriverManager.getConnection(url, userName, password);
+		Statement st = con.createStatement();
+		int row = st.executeUpdate(Query);
+		System.out.println("rows added:" + "" + row);
+		con.close();
+	}
+
+	private static void readConnection() throws Exception {
 		String url = "jdbc:mysql://localhost:3306/jdbcDemo";
 		String userName = "root";
 		String password = "Gava050220#";
@@ -10,13 +27,15 @@ public class DBase {
 		Connection con = DriverManager.getConnection(url, userName, password);
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(Query);
-		rs.next();
-		System.out.println("***From Db***");
-		System.out.println("id:" + "" + rs.getInt(1));
-		System.out.println("name:" + "" + rs.getString(2));
-		System.out.println("salary:" + "" + rs.getInt(3));
+		while (rs.next()) {
+			System.out.println("***From Db***");
+			System.out.println("id:" + "" + rs.getInt(1));
+			System.out.println("name:" + "" + rs.getString(2));
+			System.out.println("salary:" + "" + rs.getInt(3));
+		}
 
 		con.close();
+
 	}
 
 }
