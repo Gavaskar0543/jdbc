@@ -3,8 +3,29 @@ import java.sql.*;
 public class DBase {
 
 	public static void main(String[] args) throws Exception {
-		readConnection();
+		
 		// insertData();
+		insertUsingPst();
+		readConnection();
+	}
+
+	private static void insertUsingPst()  throws Exception{
+		
+		String url = "jdbc:mysql://localhost:3306/jdbcDemo";
+		String userName = "root";
+		String password = "Gava050220#";
+		int id = 3;
+		String name = "varun";
+		int salary = 52000;
+		String Query = "insert into employee values(?,?,?)";
+		Connection con = DriverManager.getConnection(url, userName, password);
+		PreparedStatement pst = 	con.prepareStatement(Query);
+		pst.setInt(1, id);
+		pst.setString(2, name);
+		pst.setInt(3, salary);
+		int row = pst.executeUpdate();
+		System.out.println("rows added:" + "" + row);
+		con.close();
 	}
 
 	private static void insertData() throws Exception {
